@@ -33,27 +33,42 @@
 	}
 
 	function od_admin_page() {
-		$api_response = wp_remote_get( 'http://boldgrid-testing.local/?beacon_api=updates' );
-		$contents = wp_remote_retrieve_body( $api_response );
-		$site_updates = json_decode( $contents, true, 3 );
-		?>
-		<h1>Available Updates</h1>
-		<?php
+		$websites = array(
+			'http://boldgrid-testing.local/',
+			'http://boldgrid-testing.local/',
+			'http://boldgrid-testing.local/',
+			'http://boldgrid-testing.local/',
+		);
 
+		$table_content = '';
+		
 		function traverseArray( $array ) {
 			foreach ( $array as $key => $value ) {
-				echo '<tr>';
 				if ( is_array( $value ) ) {
-					echo '<td><h3>' . $key . '</h3></td>';
+					echo '<tr><td><h3>' . $key . '</h3></td></tr>';
 					traverseArray( $value );
 				}	
 				else {
-					echo '<td>' . $key . '</td><td>' . $value . '</td></tr>';
+					echo '<tr><td>' . $key . '</td><td>' . $value . '</td></tr>';
 				}
 			}
 		}
 
-		echo '<table>';
-		traverseArray( $site_updates );
-		echo '</table>';
+		?>
+		<h1>Available Updates</h1>
+		<?php
+		foreach ( $websites as $website ) {
+			echo '<table style="border: 1px solid black;">';
+			echo '<th><h2>' . $website . '</h2></th>';
+			$api_response = wp_remote_get( $website . '?beacon_api=updates' );
+			if ( is_wp_error( $api_response ) ) {
+				$table_content =  print( '<tr><td>Error establishing connection to remote site.</td></tr>' );
+			} else {
+				$contents = wp_remote_retrieve_body( $api_response );
+				$site_updates = json_decode( $contents, true, 3 );
+				$table_content = traverseArray( $site_updates );
+			}
+			$table_content;
+			echo '</table>';
+		}	
 	}
