@@ -5,7 +5,7 @@ class api {
 	public static function run() {
 		$endpoint = ! empty( $_GET['beacon_api'] ) ? $_GET['beacon_api'] : null;
 
-		if ( 'showmethemoney' === $endpoint ) {
+		if ( 'updates' === $endpoint ) {
 			self::updates();
 			die();
 			return;

@@ -33,7 +33,7 @@
 	}
 
 	function od_admin_page() {
-		$api_response = wp_remote_get( 'http://boldgrid-testing.local/?beacon_api=showmethemoney' );
+		$api_response = wp_remote_get( 'http://boldgrid-testing.local/?beacon_api=updates' );
 		$contents = wp_remote_retrieve_body( $api_response );
 		$site_updates = json_decode( $contents, true, 3 );
 		?>
