@@ -58,7 +58,7 @@
 		<h1>Available Updates</h1>
 		<?php
 		foreach ( $websites as $website ) {
-			echo '<table style="border: 1px solid black;">';
+			echo '<table class="website-updates">';
 			echo '<th><h2>' . $website . '</h2></th>';
 			$api_response = wp_remote_get( $website . '?beacon_api=updates' );
 			if ( is_wp_error( $api_response ) ) {
