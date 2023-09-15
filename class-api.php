@@ -5,14 +5,6 @@ class api {
 	public static function run() {
 		$endpoint = ! empty( $_GET['beacon_api'] ) ? $_GET['beacon_api'] : null;
 
-		if ( 'updates' === $endpoint ) {
-			self::all_updates();
-			die();
-			return;
-		} else {
-			return;
-		}
-
 		switch( $endpoint ) {
 			case 'all':
 				self::all_updates();
